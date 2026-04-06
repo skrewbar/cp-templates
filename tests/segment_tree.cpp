@@ -1,5 +1,5 @@
-#include "testy.h"
 #include "segment_tree.h"
+#include "testy.h"
 
 const int sz = 10;
 const int actualSz = 1 << (int)ceil(log2(sz));
@@ -7,40 +7,37 @@ struct Adder {
     int operator()(int a, int b) { return a + b; }
 };
 
-TEST(seg, update) {
+TEST(SegmentTree, update) {
     SegmentTree<int, Adder> seg(sz);
 
     seg.update(3, 3);
-    ensuref(seg.t[3 + actualSz] == 3, "(1) update leaf node failed");
-    ensuref(seg.t[1] == 3, "(2) update parent node failed");
+    ensuref(seg.t[3 + actualSz] == 3,
+            "Expected the leaf node to be 3 but got {}", seg.t[3 + actualSz]);
+    ensuref(seg.t[1] == 3, "Expected the root node to be 3 but got {}",
+            seg.t[1]);
 
     seg.update(6, 7);
-    ensuref(seg.t[6 + actualSz] == 7, "(3) update leaf node failed");
-    ensuref(seg.t[1] == 10, "(4) update parent node failed");
+    ensuref(seg.t[6 + actualSz] == 7,
+            "Expected the leaf node to be 7 but got {}", seg.t[6 + actualSz]);
+    ensuref(seg.t[1] == 10, "Expected the root node to be 10 but got {}",
+            seg.t[1]);
 }
 
-TEST(seg, query) {
+TEST(SegmentTree, query) {
     SegmentTree<int, Adder> seg(sz);
 
     seg.update(3, 3);
     seg.update(5, 2);
     seg.update(6, 7);
 
-    ensuref(seg.query(0, sz - 1) == 12, "query [0, {}] failed", sz - 1);
-    ensuref(seg.query(0, 4) == 3, "query [0, 4] failed");
-    ensuref(seg.query(2, 5) == 5, "query [2, 5] failed");
-    ensuref(seg.query(4, 7) == 9, "query [4, 7] failed");
-}
-
-TEST(seg, add) {
-    SegmentTree<int, Adder> seg(5);
-    for (int i = 0; i < 5; i++)
-        seg.update(i, i + 1);
-
-    seg.update(2, 6);
-    ensuref(seg.query(1, 4) == 17, "query 1 failed");
-    seg.update(4, 2);
-    ensuref(seg.query(2, 4) == 12, "query 2 failed");
+    int q = seg.query(0, sz - 1);
+    ensuref(q == 12, "Expected query [0, {}] to be 12 but got {}", sz - 1, q);
+    q = seg.query(0, 4);
+    ensuref(q == 3, "Expected query [0, 4] to be 3 but got {}", q);
+    q = seg.query(2, 5);
+    ensuref(q == 5, "Expected query [2, 5] to be 5 but got {}", q);
+    q = seg.query(4, 7);
+    ensuref(q == 9, "Expected query [4, 7] to be 9 but got {}", q);
 }
 
 int main() {

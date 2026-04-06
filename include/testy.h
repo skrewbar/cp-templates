@@ -30,8 +30,8 @@ inline void RUN_ALL_TESTS() {
         }
     }
 
-    std::println("\n--- {} tests | {} passed | {} failed ---", pass + fail,
-                 pass, fail);
+    std::println("\n--- {} tests | {}{}{} passed | {}{}{} failed ---", pass + fail,
+                 GREEN, pass, RESET, RED, fail, RESET);
 }
 }  // namespace test
 

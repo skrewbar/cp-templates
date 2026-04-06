@@ -1,0 +1,16 @@
+CompileFlags:
+  Add:
+    - -Iinclude
+    - -Ialgorithms
+    - -Idata structures
+    - -std=gnu++23
+    - -xc++
+
+Diagnostics:
+  ClangTidy:
+    Add:
+      - performance-*
+      - clang-diagnostic-*
+      - clang-analyzer-*
+    CheckOptions:
+      WarningAsErrors: true

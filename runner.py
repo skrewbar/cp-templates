@@ -17,7 +17,7 @@ def main():
     binary = src.with_suffix(".a")
 
     compile_result = subprocess.run(
-        ["g++-15", "-std=c++23", "-Iinclude", "-o", str(binary), str(src)],
+        ["g++-15", "-std=c++23", "-Iinclude", "-Ialgorithms", "-Idata structures", "-o", str(binary), str(src)],
         capture_output=True,
         text=True,
     )

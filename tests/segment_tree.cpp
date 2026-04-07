@@ -41,5 +41,5 @@ TEST(SegmentTree, query) {
 }
 
 int main() {
-    test::RUN_ALL_TESTS();
+    testy::RUN_ALL_TESTS();
 }

@@ -1,7 +1,7 @@
 #pragma once
 #include <bits/stdc++.h>
 
-namespace test {
+namespace testy {
 using TestFn = void (*)();
 inline auto& registry() {
     static std::vector<std::pair<std::string, TestFn>> r;
@@ -39,7 +39,7 @@ inline void RUN_ALL_TESTS() {
     class suite##_##name##_Test {                                    \
        private:                                                      \
         static void test();                                          \
-        static inline test::Registrar _reg{#suite "." #name, &test}; \
+        static inline testy::Registrar _reg{#suite "." #name, &test}; \
     };                                                               \
                                                                      \
     void suite##_##name##_Test::test()

@@ -31,8 +31,8 @@
     "scope": "cpp",
     "prefix": "bymac",
     "body": [
-      "#define by(x) [&](const auto& a, const auto& b) { return a.x < b.x; }",
-      "#define by_desc(x) [&](const auto& a, const auto& b) { return a.x > b.x; }",
+      "#define by(x) [](const auto& a, const auto& b) { return a.x < b.x; }",
+      "#define by_desc(x) [](const auto& a, const auto& b) { return a.x > b.x; }",
     ],
   },
   "minheap macro": {

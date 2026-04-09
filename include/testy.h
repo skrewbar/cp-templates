@@ -1,7 +1,7 @@
 #pragma once
-#include <vector>
-#include <string>
 #include <print>
+#include <string>
+#include <vector>
 
 namespace testy {
 using TestFn = void (*)();
@@ -32,18 +32,18 @@ inline void RUN_ALL_TESTS() {
         }
     }
 
-    std::println("\n--- {} tests | {}{}{} passed | {}{}{} failed ---", pass + fail,
-                 GREEN, pass, RESET, RED, fail, RESET);
+    std::println("\n--- {} tests | {}{}{} passed | {}{}{} failed ---",
+                 pass + fail, GREEN, pass, RESET, RED, fail, RESET);
 }
-}  // namespace test
+}  // namespace testy
 
-#define TEST(suite, name)                                            \
-    class suite##_##name##_Test {                                    \
-       private:                                                      \
-        static void test();                                          \
+#define TEST(suite, name)                                             \
+    class suite##_##name##_Test {                                     \
+       private:                                                       \
+        static void test();                                           \
         static inline testy::Registrar _reg{#suite "." #name, &test}; \
-    };                                                               \
-                                                                     \
+    };                                                                \
+                                                                      \
     void suite##_##name##_Test::test()
 
 template <typename... Args>

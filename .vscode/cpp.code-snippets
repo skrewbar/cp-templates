@@ -17,11 +17,15 @@
     ],
     "description": "C++ Competitive Programming Template",
   },
-  "vector macro": {
+  "all macro": {
     "scope": "cpp",
     "prefix": "allmac",
+    "body": "#define all(v) (v).begin(), (v).end()",
+  },
+  "compress macro": {
+    "scope": "cpp",
+    "prefix": "compmac",
     "body": [
-      "#define all(v) (v).begin(), (v).end()",
       "#define compress(v) \\",
       "    sort(all(v));   \\",
       "    v.erase(unique(all(v)), (v).end())",

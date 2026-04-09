@@ -2,9 +2,6 @@
 using namespace std;
 
 #define all(v) (v).begin(), (v).end()
-#define compress(v) \
-    sort(all(v));   \
-    v.erase(unique(all(v)), (v).end())
 
 template <typename T>
 bool minimize(T& target, T value) {

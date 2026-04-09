@@ -2,9 +2,6 @@
 using namespace std;
 
 #define all(v) (v).begin(), (v).end()
-#define compress(v) \
-    sort(all(v));   \
-    v.erase(unique(all(v)), (v).end())
 
 struct DisjointSet {
     vector<int> parent;

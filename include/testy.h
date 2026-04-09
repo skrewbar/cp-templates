@@ -1,5 +1,7 @@
 #pragma once
-#include <bits/stdc++.h>
+#include <vector>
+#include <string>
+#include <print>
 
 namespace testy {
 using TestFn = void (*)();

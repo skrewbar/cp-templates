@@ -7,6 +7,7 @@ from pathlib import Path
 def main():
     parser = argparse.ArgumentParser(description="Run tests for a cpp file")
     parser.add_argument("path", type=Path, help="Path to the .cpp file")
+    parser.add_argument("--nocompile", action="store_true", help="Skip compilation of the test file")
     args = parser.parse_args()
 
     src: Path = args.path
@@ -16,15 +17,16 @@ def main():
 
     binary = src.with_suffix(".a")
 
-    compile_result = subprocess.run(
-        ["g++-15", "-std=c++23", "-Iinclude", "-Ialgorithms", "-Idata structures", "-o", str(binary), str(src)],
-        capture_output=True,
-        text=True,
-    )
-    if compile_result.returncode != 0:
-        print("[Compile Error]")
-        print(compile_result.stderr)
-        sys.exit(1)
+    if not args.nocompile or not binary.exists():
+        compile_result = subprocess.run(
+            ["g++-15", "-std=c++23", "-Iinclude", "-Ialgorithms", "-Idata structures", "-o", str(binary), str(src)],
+            capture_output=True,
+            text=True,
+        )
+        if compile_result.returncode != 0:
+            print("[Compile Error]")
+            print(compile_result.stderr)
+            sys.exit(1)
 
     run_result = None
     try:

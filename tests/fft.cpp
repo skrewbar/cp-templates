@@ -20,11 +20,9 @@ TEST(fft, convolution) {
     vector<int> expected = {4, 13, 28, 27, 18};
     for (int i = 0; i < n; i++) {
         if (i < expected.size())
-            ensuref(round(res[i].real()) == expected[i], "Expected {}, got {}",
-                    expected[i], round(res[i].real()));
+            expect_eq(round(res[i].real()), expected[i]);
         else
-            ensuref(round(res[i].real()) == 0, "Expected 0, got {}",
-                    round(res[i].real()));
+            expect_eq(round(res[i].real()), 0);
     }
 }
 

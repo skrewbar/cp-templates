@@ -20,10 +20,9 @@ TEST(ntt, convolution) {
     vector<ll> expected = {4, 13, 28, 27, 18};
     for (int i = 0; i < n; i++) {
         if (i < expected.size())
-            ensuref(res[i] == expected[i], "Expected {}, got {}", expected[i],
-                    res[i]);
+            expect_eq(res[i], expected[i]);
         else
-            ensuref(res[i] == 0, "Expected 0, got {}", res[i]);
+            expect_eq(res[i], 0);
     }
 }
 

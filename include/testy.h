@@ -17,6 +17,19 @@ struct Registrar {
 };
 
 constexpr const char *GREEN = "\033[32m", *RED = "\033[31m", *RESET = "\033[0m";
+#define COLORED(text, color) std::format("{}{}{}", color, text, RESET)
+
+template <typename First, typename... Args>
+void print(First&& first, Args&&... args) {
+    std::print("{}", first);
+    (std::print(" {}", args), ...);
+}
+
+template <typename... Args>
+void println(Args&&... args) {
+    print(std::forward<Args>(args)...);
+    std::println();
+}
 
 inline void RUN_ALL_TESTS() {
     int pass = 0, fail = 0;
@@ -24,16 +37,16 @@ inline void RUN_ALL_TESTS() {
     for (auto& [name, fn] : registry()) {
         try {
             fn();
-            std::println("{}[PASS]{} {}", GREEN, RESET, name);
+            println(COLORED("[PASS]", GREEN), name);
             ++pass;
         } catch (const std::exception& e) {
-            std::println("{}[FAIL]{} {} - {}", RED, RESET, name, e.what());
+            println(COLORED("[FAIL]", RED), name, "-", e.what());
             ++fail;
         }
     }
 
-    std::println("\n--- {} tests | {}{}{} passed | {}{}{} failed ---",
-                 pass + fail, GREEN, pass, RESET, RED, fail, RESET);
+    std::println("\n--- {} tests | {} passed | {} failed ---", pass + fail,
+                 COLORED(pass, GREEN), COLORED(fail, RED));
 }
 }  // namespace testy
 
@@ -47,7 +60,21 @@ inline void RUN_ALL_TESTS() {
     void suite##_##name##_Test::test()
 
 template <typename... Args>
-void ensuref(bool cond, std::format_string<Args...> fmt, Args&&... args) {
+void _expectf(int line,
+              bool cond,
+              std::format_string<Args...> fmt,
+              Args&&... args) {
     if (!cond)
-        throw std::runtime_error(std::format(fmt, std::forward<Args>(args)...));
+        throw std::runtime_error(
+            std::format("Line {}: {}", line,
+                        std::format(fmt, std::forward<Args>(args)...)));
 }
+#define expectf(...) _expectf(__LINE__, __VA_ARGS__)
+
+template <typename T1, typename T2>
+void _expect_eq(const T1& a, const T2& b, int line) {
+    if (a != b)
+        throw std::runtime_error(
+            std::format("Line {}: Expected {}, got {}", line, a, b));
+}
+#define expect_eq(a, b) _expect_eq(a, b, __LINE__)
